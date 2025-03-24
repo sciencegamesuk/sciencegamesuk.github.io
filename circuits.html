@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit Builder Game</title>
+    <style>
+        /* styles.css */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            padding: 20px;
+        }
+
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .component-list {
+            margin-bottom: 30px;
+        }
+
+        .component {
+            margin: 10px;
+            padding: 15px;
+            background-color: #b0e0e6;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .workspace {
+            width: 100%;
+            min-height: 200px;
+            border: 2px dashed #cccccc;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .workspace p {
+            font-size: 18px;
+            color: #888;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #feedback {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Circuit Builder Game</h1>
+
+        <div class="component-list">
+            <h3>Components</h3>
+            <div class="component" id="battery" draggable="true">Battery</div>
+            <div class="component" id="resistor" draggable="true">Resistor</div>
+            <div class="component" id="lightbulb" draggable="true">Light Bulb</div>
+        </div>
+
+        <div class="workspace" id="workspace">
+            <h3>Workspace</h3>
+            <p>Drag and drop components here to build a circuit.</p>
+        </div>
+        
+        <div class="button-container">
+            <button id="check-circuit">Check Circuit</button>
+        </div>
+
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        // app.js
+
+        let components = [];
+        let circuitIsCorrect = false;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Make components draggable
+            const battery = document.getElementById('battery');
+            const resistor = document.getElementById('resistor');
+            const lightbulb = document.getElementById('lightbulb');
+            const workspace = document.getElementById('workspace');
+            
+            const componentsArray = [battery, resistor, lightbulb];
+
+            componentsArray.forEach(component => {
+                component.addEventListener('dragstart', function (e) {
+                    e.dataTransfer.setData('text', component.id);
+                });
+            });
+
+            workspace.addEventListener('dragover', function (e) {
+                e.preventDefault();
+            });
+
+            workspace.addEventListener('drop', function (e) {
+                e.preventDefault();
+                let componentId = e.dataTransfer.getData('text');
+                let component = document.getElementById(componentId);
+                let clone = component.cloneNode(true);
+                clone.setAttribute('draggable', 'false');
+                clone.classList.add('dropped');
+                workspace.appendChild(clone);
+
+                components.push(clone);
+            });
+
+            // Check if the circuit is correct
+            document.getElementById('check-circuit').addEventListener('click', function () {
+                // Logic to check if the components form a valid circuit
+                // Example: battery, resistor, and lightbulb are needed for a simple working circuit.
+                let hasBattery = components.some(c => c.id === 'battery');
+                let hasResistor = components.some(c => c.id === 'resistor');
+                let hasLightbulb = components.some(c => c.id === 'lightbulb');
+                
+                if (hasBattery && hasResistor && hasLightbulb) {
+                    circuitIsCorrect = true;
+                } else {
+                    circuitIsCorrect = false;
+                }
+
+                // Show feedback
+                const feedback = document.getElementById('feedback');
+                if (circuitIsCorrect) {
+                    feedback.textContent = "Congratulations! You created a valid circuit!";
+                    feedback.style.color = "green";
+                } else {
+                    feedback.textContent = "Try again! A complete circuit is needed.";
+                    feedback.style.color = "red";
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
