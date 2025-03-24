@@ -18,15 +18,19 @@
         .game-item {
             display: inline-block;
             margin: 20px;
-            padding: 10px;
-            background-color: #3498db;
-            color: white;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 18px;
+            width: 150px;
+            height: 150px;
+            background-color: #3498db;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .game-item:hover {
-            background-color: #2980b9;
+        .game-item img {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            object-fit: cover;
         }
         .popup {
             display: none;
@@ -75,14 +79,20 @@
 
 <div class="library-container">
     <h1>Game Library</h1>
-    <div class="game-item" id="electricCircuitsBtn">Electric Circuits</div>
+    <!-- Game items with images -->
+    <div class="game-item" id="electricCircuitsBtn">
+        <img src="https://via.placeholder.com/150x150/3498db/ffffff?text=Electric+Circuits" alt="Electric Circuits">
+    </div>
+    <div class="game-item" id="electrosBtn">
+        <img src="https://via.placeholder.com/150x150/2ecc71/ffffff?text=Electros" alt="Electros">
+    </div>
 </div>
 
 <!-- Popup Modal -->
 <div class="overlay" id="overlay"></div>
 <div class="popup" id="popup">
-    <h2>Electric Circuits Game</h2>
-    <p>Ready to play the Electric Circuits game?</p>
+    <h2 id="gameTitle">Game</h2>
+    <p id="gameDescription">Ready to play?</p>
     <button class="play-button" id="playBtn">Play</button>
     <div class="close-button" id="closePopup">Close</div>
 </div>
@@ -90,15 +100,30 @@
 <script>
     // Get the elements
     const electricCircuitsBtn = document.getElementById('electricCircuitsBtn');
+    const electrosBtn = document.getElementById('electrosBtn');
     const popup = document.getElementById('popup');
     const overlay = document.getElementById('overlay');
     const closePopup = document.getElementById('closePopup');
     const playBtn = document.getElementById('playBtn');
+    const gameTitle = document.getElementById('gameTitle');
+    const gameDescription = document.getElementById('gameDescription');
 
-    // Show the popup when game is clicked
-    electricCircuitsBtn.addEventListener('click', () => {
+    // Function to open popup for a specific game
+    function openPopup(gameName, description) {
         overlay.style.display = 'block';
         popup.style.display = 'block';
+        gameTitle.innerText = gameName;
+        gameDescription.innerText = description;
+    }
+
+    // Show popup for Electric Circuits game
+    electricCircuitsBtn.addEventListener('click', () => {
+        openPopup('Electric Circuits', 'Ready to play the Electric Circuits game?');
+    });
+
+    // Show popup for Electros game
+    electrosBtn.addEventListener('click', () => {
+        openPopup('Electros', 'Ready to play the Electros game?');
     });
 
     // Close the popup when the close button is clicked
@@ -109,8 +134,8 @@
 
     // Action when the play button is clicked
     playBtn.addEventListener('click', () => {
-        alert('Starting Electric Circuits Game!');
-        // Here, you can add the actual game launching logic
+        alert('Starting the game!');
+        // Here you can add the actual game launching logic
         // For example, redirect to the game page or load the game
         overlay.style.display = 'none';
         popup.style.display = 'none';
@@ -125,3 +150,4 @@
 
 </body>
 </html>
+
