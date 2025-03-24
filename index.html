@@ -19,18 +19,36 @@
             display: inline-block;
             margin: 20px;
             cursor: pointer;
-            width: 150px;
-            height: 150px;
+            width: 300px;
+            height: 300px;
             background-color: #3498db;
             border-radius: 5px;
             position: relative;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
         }
         .game-item img {
             width: 100%;
             height: 100%;
-            border-radius: 5px;
             object-fit: cover;
+        }
+        .game-item .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .game-item:hover .game-overlay {
+            opacity: 1;
         }
         .popup {
             display: none;
@@ -79,20 +97,18 @@
 
 <div class="library-container">
     <h1>Game Library</h1>
-    <!-- Game items with images -->
+    <!-- Electric Circuits game with background image -->
     <div class="game-item" id="electricCircuitsBtn">
-        <img src="https://via.placeholder.com/150x150/3498db/ffffff?text=Electric+Circuits" alt="Electric Circuits">
-    </div>
-    <div class="game-item" id="electrosBtn">
-        <img src="https://via.placeholder.com/150x150/2ecc71/ffffff?text=Electros" alt="Electros">
+        <img src="https://media.istockphoto.com/id/1354760412/vector/abstract-technology-circuit-board-background-futuristic-chip-processor-code-on-blue.jpg?s=612x612&w=0&k=20&c=3x2J_1cnFrPsSurMyVQ0Z9y_WPiJWTCmpqU_7ZL_OAM=" alt="Electric Circuits">
+        <div class="game-overlay">Electric Circuits</div>
     </div>
 </div>
 
 <!-- Popup Modal -->
 <div class="overlay" id="overlay"></div>
 <div class="popup" id="popup">
-    <h2 id="gameTitle">Game</h2>
-    <p id="gameDescription">Ready to play?</p>
+    <h2 id="gameTitle">Electric Circuits</h2>
+    <p id="gameDescription">Ready to play the Electric Circuits game?</p>
     <button class="play-button" id="playBtn">Play</button>
     <div class="close-button" id="closePopup">Close</div>
 </div>
@@ -100,7 +116,6 @@
 <script>
     // Get the elements
     const electricCircuitsBtn = document.getElementById('electricCircuitsBtn');
-    const electrosBtn = document.getElementById('electrosBtn');
     const popup = document.getElementById('popup');
     const overlay = document.getElementById('overlay');
     const closePopup = document.getElementById('closePopup');
@@ -121,11 +136,6 @@
         openPopup('Electric Circuits', 'Ready to play the Electric Circuits game?');
     });
 
-    // Show popup for Electros game
-    electrosBtn.addEventListener('click', () => {
-        openPopup('Electros', 'Ready to play the Electros game?');
-    });
-
     // Close the popup when the close button is clicked
     closePopup.addEventListener('click', () => {
         overlay.style.display = 'none';
@@ -134,7 +144,7 @@
 
     // Action when the play button is clicked
     playBtn.addEventListener('click', () => {
-        alert('Starting the game!');
+        alert('Starting the Electric Circuits game!');
         // Here you can add the actual game launching logic
         // For example, redirect to the game page or load the game
         overlay.style.display = 'none';
